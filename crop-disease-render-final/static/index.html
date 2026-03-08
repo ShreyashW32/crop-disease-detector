@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Crop Disease Detector</title>
+  <link rel="stylesheet" href="/static/styles.css" />
+</head>
+<body>
+  <div class="wrap">
+    <h1>Realtime Crop Disease Detector</h1>
+    <p class="sub">Server-side classification for your uploaded TFLite model. This version is made to avoid the browser model-loading failures you hit on Netlify.</p>
+
+    <div class="toolbar">
+      <button id="startCam">Start camera</button>
+      <button id="snap">Predict once</button>
+      <button id="toggle">Start realtime</button>
+      <label>Interval <input id="interval" type="number" min="500" step="100" value="1500" /> ms</label>
+      <select id="model">
+        <option value="crop_disease.tflite">crop_disease.tflite</option>
+        <option value="crop_disease_int8.tflite">crop_disease_int8.tflite</option>
+      </select>
+      <span id="status">Ready</span>
+    </div>
+
+    <div class="grid">
+      <div class="videoCard">
+        <div class="stage">
+          <video id="video" autoplay playsinline muted></video>
+          <div class="guide"></div>
+          <canvas id="canvas" width="224" height="224" hidden></canvas>
+        </div>
+      </div>
+
+      <div class="resultCard">
+        <div class="pill">Model type: classifier</div>
+        <h2 id="topLabel">—</h2>
+        <div id="conf" class="conf">—</div>
+        <div class="note">This model classifies the whole frame. It cannot draw real disease bounding boxes because the model does not output box coordinates.</div>
+        <ol id="topList"></ol>
+      </div>
+    </div>
+  </div>
+  <script src="/static/app.js"></script>
+</body>
+</html>
